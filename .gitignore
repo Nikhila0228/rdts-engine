@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# React / Node
+node_modules/
+build/
+.eslintcache
+
+# Docker
+.data/

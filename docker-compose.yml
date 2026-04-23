@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: rdts_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: rdts_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: rdts_redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    container_name: rdts_backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+
+  background_worker:
+    build: ./backend
+    command: python app/worker.py
+    deploy:
+      replicas: 1
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/rdts_db
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:
