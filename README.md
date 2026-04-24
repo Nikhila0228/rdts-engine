@@ -70,7 +70,7 @@ Validated concurrent processing across multiple worker instances in a containeri
 
 Getting Started:
 Clone the repository:
-git clone https://github.com/your-username/rdts-engine.git
+git clone https://github.com/Nikhila0228/rdts-engine.git
 cd rdts-engine
 
 Start the core infrastructure (database, Redis, backend, and workers):
