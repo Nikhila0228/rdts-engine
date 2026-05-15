@@ -19,8 +19,10 @@ app.add_middleware(
 
 # Configuration for database and cache hosts
 DB_HOST = os.getenv("DB_HOST", "db")
-REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-DATABASE_URL = f"postgresql://user:password@{DB_HOST}:5432/rdts_db"
+DB_USER = os.getenv("DB_USER", "neondb_owner")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "password")  # Render variables lo unna pass ni chaduvuthundi
+DB_NAME = os.getenv("DB_NAME", "neondb")
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}?sslmode=require"
 
 redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
 
