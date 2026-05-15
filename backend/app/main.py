@@ -24,7 +24,8 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "password")  # Render variables lo unna p
 DB_NAME = os.getenv("DB_NAME", "neondb")
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}?sslmode=require"
 
-redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 class TaskCreate(BaseModel):
     name: str
