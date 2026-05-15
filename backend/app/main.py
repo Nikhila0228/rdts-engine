@@ -20,7 +20,7 @@ app.add_middleware(
 # Configuration for database and cache hosts
 DB_HOST = os.getenv("DB_HOST", "db")
 DB_USER = os.getenv("DB_USER", "neondb_owner")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "password")  # Render variables lo unna pass ni chaduvuthundi
+DB_PASSWORD = os.getenv("DB_PASSWORD", "password")  
 DB_NAME = os.getenv("DB_NAME", "neondb")
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}?sslmode=require"
 
