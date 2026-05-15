@@ -18,5 +18,4 @@ COPY . .
 
 # Execution commands are managed via docker-compose.yml
 
-# పాత లైన్ ని తీసేసి ఇలా పెట్టు
-CMD python app/worker.py & uvicorn app.main:app --host 0.0.0.0 --port 10000
+CMD python app/worker.py & uvicorn app.main:app --host 0.0.0.0 --port $PORT
