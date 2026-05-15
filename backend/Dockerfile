@@ -18,4 +18,4 @@ COPY . .
 
 # Execution commands are managed via docker-compose.yml
 
-CMD python app/worker.py & uvicorn app.main:app --host 0.0.0.0 --port $PORT
+CMD ["sh", "-c", "python app/worker.py & uvicorn app.main:app --host 0.0.0.0 --port 10000"]
