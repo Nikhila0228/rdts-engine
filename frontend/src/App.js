@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = "https://rdts-backend.onrender.com";
 /**
  * RDTS Dashboard - Frontend for Distributed Task Scheduler
  * Handles task dispatching, real-time status monitoring, and system metrics.
@@ -13,7 +14,7 @@ function App() {
   // 1. Fetch current tasks from the backend API
   const fetchTasksData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/tasks');
+      const response = await axios.get(`${API_BASE_URL}/tasks`);
       setTasksList(response.data);
     } catch (apiError) {
       console.error("Task synchronization failed:", apiError);
@@ -23,7 +24,7 @@ function App() {
   // 2. Fetch real-time system metrics (Success, Pending, DLQ)
   const fetchSystemMetrics = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/stats');
+      const response = await axios.get(`${API_BASE_URL}/stats`);
       setSystemStats(response.data);
     } catch (apiError) {
       console.error("Metric retrieval error:", apiError);
@@ -46,7 +47,7 @@ function App() {
     if (!taskNameInput) return;
     try {
       // POST request to trigger the distributed task pipeline
-      await axios.post('http://localhost:8000/tasks', { name: taskNameInput });
+      await axios.post(`${API_BASE_URL}/tasks`, { name: taskNameInput });
       fetchTasksData();
       fetchSystemMetrics();
       setTaskNameInput('');
