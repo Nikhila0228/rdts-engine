@@ -12,10 +12,9 @@ REDIS_URL = os.getenv("REDIS_URL")
 if REDIS_URL:
     redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
 else:
-    REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-    redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
-# Initialize Redis client
-redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
+    local_host = os.getenv("REDIS_HOST", "localhost")
+    redis_client = redis.Redis(host=local_host, port=6379, db=0, decode_responses=True)
+
 
 def execute_worker_cycle():
     # Reliable Pop: Move task from main queue to processing queue
