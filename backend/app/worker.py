@@ -5,9 +5,15 @@ import os
 import json
 
 # Connection settings
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@db:5432/rdts_db")
-REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+REDIS_URL = os.getenv("REDIS_URL")
+if REDIS_URL:
+    redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+else:
+    REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+    redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
 # Initialize Redis client
 redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
 
